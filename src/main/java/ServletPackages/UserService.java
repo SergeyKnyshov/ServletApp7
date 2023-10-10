@@ -4,29 +4,29 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static ServletPackages.HibernateUtil.sessionFactory;
+import org.hibernate.Session;
+
 
 public class UserService {
     private static final Map<String, UserProfile> sessionIdToProfile = new HashMap<>();
-    private static final UserDatabase userBD;
-    static {
-        try {
-            userBD = new UserDatabase(ConnectionPro.getConnection());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
     
     public UserService() {
     }
 
     public static boolean addNewUser(UserProfile user) {
+        Session session = sessionFactory.openSession();
+        UserDatabase userBD = new UserDatabase(session);
         return
                 userBD.saveUser(user);
 
     }
 
     public static UserProfile getUserByName(String name) throws SQLException {
+        Session session = sessionFactory.openSession();
+        UserDatabase userBD = new UserDatabase(session);
         return userBD.getUser(name);
     }
 

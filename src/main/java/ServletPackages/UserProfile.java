@@ -1,9 +1,24 @@
 package ServletPackages;
-
+import javax.persistence.*;
+@Entity
+@Table(name = "users")
 public class UserProfile {
-    private final String login;
-    private final String pass;
-    private final String email;
+    @Id
+    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name = "username")
+    private String login;
+    @Column(name = "password")
+    String pass;
+    @Column(name = "email")
+    String email;
+
+    public UserProfile() {
+    }
+
+
 
     public UserProfile(String login, String pass, String email) {
         this.login = login;
